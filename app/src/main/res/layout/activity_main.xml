@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00E5FF"
+    android:layout_gravity="center"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/l1"
+        android:layout_width="381dp"
+        android:layout_height="600dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="17dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.122">
+
+
+        <LinearLayout
+            android:id="@+id/Lname"
+            android:layout_width="361dp"
+            android:layout_height="74dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewName"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/adamina"
+                android:paddingLeft="15dp"
+                android:text="Name"
+                android:textAlignment="textStart"
+                android:textColor="#0E0E0E"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editTextPersonName"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#252323"
+                android:ems="10"
+                android:fontFamily="@font/adamina"
+                android:inputType="textPersonName"
+                android:text=""
+                android:textColor="#0E0E0E"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Lage"
+            android:layout_width="361dp"
+            android:layout_height="74dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewAge"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/adamina"
+                android:paddingLeft="15dp"
+                android:text="Age"
+                android:textColor="#0E0E0E"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editTextAge"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#252323"
+                android:ems="10"
+                android:fontFamily="@font/adamina"
+                android:inputType="textPersonName"
+                android:text=""
+                android:textColor="#0E0E0E"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Lgender"
+            android:layout_width="361dp"
+            android:layout_height="74dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewGender"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/adamina"
+                android:paddingLeft="15dp"
+                android:text="Gender"
+                android:textColor="#0E0E0E"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editTextGender"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#252323"
+                android:ems="10"
+                android:fontFamily="@font/adamina"
+                android:inputType="textPersonName"
+                android:text=""
+                android:textColor="#0E0E0E"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Lemail"
+            android:layout_width="361dp"
+            android:layout_height="74dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewMail"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/adamina"
+                android:paddingLeft="15dp"
+                android:text="Email"
+                android:textColor="#0E0E0E"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editTextMail"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#252323"
+                android:ems="10"
+                android:fontFamily="@font/adamina"
+                android:inputType="textPersonName"
+                android:text=""
+                android:textColor="#0E0E0E"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Lphone"
+            android:layout_width="361dp"
+            android:layout_height="74dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewPhone"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/adamina"
+                android:paddingLeft="15dp"
+                android:text="Mobile no"
+                android:textColor="#0E0E0E"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editTextPhone"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#252323"
+                android:ems="10"
+                android:fontFamily="@font/adamina"
+                android:inputType="textPersonName"
+                android:text=""
+                android:textColor="#0E0E0E"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="173dp"
+        android:layout_height="62dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="116dp"
+        android:layout_marginBottom="35dp"
+        android:backgroundTint="#FF1744"
+        android:fontFamily="@font/adamina"
+        android:onClick="submit"
+        android:text="Submit"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/l1"
+        app:layout_constraintVertical_bias="0.0" />
+
+</RelativeLayout>
