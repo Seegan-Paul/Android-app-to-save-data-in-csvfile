@@ -1,27 +1,51 @@
 package com.example.task1;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.opencsv.CSVWriter;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText name,age,gender,email,phone;
+    ImageView image;
+    Uri imageFilePath;
+    Bitmap ImageStore;
+    static final int PICK_IMAGE = 100;
+    ByteArrayOutputStream byteArrayOutputStream;
+    byte [] ImageByte;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         gender = findViewById(R.id.editTextGender);
         email = findViewById(R.id.editTextMail);
         phone = findViewById(R.id.editTextPhone);
+        image = findViewById(R.id.imageView);
 
 
         if(Build.VERSION.SDK_INT<Build.VERSION_CODES.Q){
@@ -43,12 +68,12 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             //Android version >= 10
-            String path = "CSV_File";
+            String path = "Excel_File";
             File file2 = new File(getExternalFilesDir(null)+"/"+path);
             if(!file2.exists()){
                 file2.mkdir();
                 //Toast.makeText(MainActivity.this, "Folder created\n"+file2.getPath(),Toast.LENGTH_LONG).show();
-                File file3 = new File(file2.getPath()+"/xyz.csv");
+                File file3 = new File(file2.getPath()+"/xyz.xls");
                 try {
                     file3.createNewFile();
                     //if(file3.createNewFile())
@@ -57,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     //e.printStackTrace();
                     Toast.makeText(MainActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
                 }
-                String csv = file3.getPath();
+                /*String csv = file3.getPath();
                 CSVWriter csvWriter = null;
                 try {
                     csvWriter = new CSVWriter(new FileWriter(csv,true));
@@ -70,6 +95,39 @@ public class MainActivity extends AppCompatActivity {
                     csvWriter.close();
                 } catch (IOException e) {
                     Toast.makeText(MainActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
+                }*/
+
+                String row1[] = new String[]{"Name","Age", "Gender", "Email", "Phone no","image"};
+                Sheet sheet = null;
+                Row row = null;
+                Cell cell = null;
+
+                Workbook workbook = new HSSFWorkbook();
+                sheet = workbook.createSheet("sheet1");
+                row = sheet.createRow(0);
+                for(int i=0;i<6;i++){
+                    cell = row.createCell(i);
+                    cell.setCellValue(row1[i]);
+
+                }
+
+                FileOutputStream fileOutputStream = null;
+
+                try {
+                    fileOutputStream = new FileOutputStream(file3);
+                    workbook.write(fileOutputStream);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if(fileOutputStream != null){
+                    try {
+                        fileOutputStream.flush();
+                        fileOutputStream.close();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -92,33 +150,54 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void create() {
-        String path = "CSV_file";
+        String path = "Excel_File";
         File file = new File(Environment.getExternalStorageDirectory(),path);
         if(!file.exists()){
             file.mkdir();
-            File file1 = new File(file.getPath()+"/xyz.csv");
+            //Toast.makeText(MainActivity.this, "Folder created\n"+file2.getPath(),Toast.LENGTH_LONG).show();
+            File file1 = new File(file.getPath()+"/xyz.xls");
             try {
                 file1.createNewFile();
-                /*if(file1.createNewFile())
-                    Toast.makeText(MainActivity.this, "File created\n"+file1.getPath(),Toast.LENGTH_LONG).show();*/
+                //if(file3.createNewFile())
+                //  Toast.makeText(MainActivity.this, "File created\n"+file3.getPath(),Toast.LENGTH_LONG).show();
             } catch (IOException e) {
+                //e.printStackTrace();
                 Toast.makeText(MainActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
             }
 
-            String csv = file1.getPath();
-            CSVWriter csvWriter = null;
-            try {
-                csvWriter = new CSVWriter(new FileWriter(csv,true));
-            } catch (IOException e) {
-                Toast.makeText(MainActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
+            String row1[] = new String[]{"Name","Age", "Gender", "Email", "Phone no","Image"};
+            Sheet sheet = null;
+            Row row = null;
+            Cell cell = null;
+
+            Workbook workbook = new HSSFWorkbook();
+            sheet = workbook.createSheet("sheet1");
+            row = sheet.createRow(0);
+            for(int i=0;i<6;i++){
+                cell = row.createCell(i);
+                cell.setCellValue(row1[i]);
+
             }
-            String row1[] = new String[]{"Name","Age", "Gender", "Email", "Phone no"};
-            csvWriter.writeNext(row1);
+            FileOutputStream fileOutputStream = null;
+
             try {
-                csvWriter.close();
-            } catch (IOException e) {
-                Toast.makeText(MainActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
+                fileOutputStream = new FileOutputStream(file1);
+                workbook.write(fileOutputStream);
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
+            if(fileOutputStream != null){
+                try {
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
         }
 
     }
@@ -133,14 +212,65 @@ public class MainActivity extends AppCompatActivity {
             gender1 = gender.getText().toString();
             email1 = email.getText().toString();
             phone1 = phone.getText().toString();
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            ImageStore.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+            ImageByte = byteArrayOutputStream.toByteArray();
 
-            String csv1 = "/sdcard/CSV_File/xyz.csv";
+            String csv1 = "/sdcard/Excel_File/xyz.xls";
             try {
-                CSVWriter csvwritter1 = new CSVWriter(new FileWriter(csv1,true));
-                String row[] = new String[]{name1,age1,gender1,email1,phone1};
-                csvwritter1.writeNext(row);
-                csvwritter1.close();
-                Toast.makeText(MainActivity.this,"Data inserted successfully",Toast.LENGTH_LONG).show();
+                FileInputStream fileInputStream = new FileInputStream(csv1);
+
+                String val[] = new String[]{name1,age1,gender1,email1,phone1};
+                //String row1[] = new String[]{"Name","Age", "Gender", "Email", "Phone no"};
+                Sheet sheet = null;
+                Row row = null;
+                Cell cell = null;
+
+
+                Workbook book1 = new HSSFWorkbook(fileInputStream);
+                sheet = book1.getSheet("sheet1");
+                int lastrow = sheet.getLastRowNum();
+                row = sheet.createRow(lastrow+1);
+                int i =0;
+                for(i=0;i<5;i++){
+                    cell = row.createCell(i);
+                    cell.setCellValue(val[i]);
+                }
+                int cellNum = row.getLastCellNum();
+                int Index = book1.addPicture(ImageByte,Workbook.PICTURE_TYPE_JPEG);
+                CreationHelper creationHelper = book1.getCreationHelper();
+
+                ClientAnchor clientAnchor = creationHelper.createClientAnchor();
+                clientAnchor.setCol1(cellNum);
+                clientAnchor.setRow1(lastrow+1);
+                clientAnchor.setCol2(cellNum+1);
+                clientAnchor.setRow2(lastrow+2);
+
+                Drawing drawing = sheet.createDrawingPatriarch();
+                drawing.createPicture(clientAnchor, Index);
+                //row.createCell(cellNum);
+
+                fileInputStream.close();
+                FileOutputStream fileOutputStream = null;
+
+                try {
+                    fileOutputStream = new FileOutputStream(csv1);
+                    book1.write(fileOutputStream);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if(fileOutputStream != null){
+                    try {
+                        fileOutputStream.flush();
+                        fileOutputStream.close();
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
             } catch (IOException e) {
                 Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
             }
@@ -152,18 +282,98 @@ public class MainActivity extends AppCompatActivity {
             gender1 = gender.getText().toString();
             email1 = email.getText().toString();
             phone1 = phone.getText().toString();
-            String path = "CSV_File/xyz.csv";
+            String path = "Excel_File/xyz.xls";
             File file2 = new File(getExternalFilesDir(null)+"/"+path);
             String csv1 = file2.getPath();
+
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            ImageStore.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+            ImageByte = byteArrayOutputStream.toByteArray();
+
             try {
-                CSVWriter csvwritter1 = new CSVWriter(new FileWriter(csv1,true));
-                String row[] = new String[]{name1,age1,gender1,email1,phone1};
-                csvwritter1.writeNext(row);
-                csvwritter1.close();
-                Toast.makeText(MainActivity.this,"Data inserted successfully",Toast.LENGTH_LONG).show();
+                FileInputStream fileInputStream = new FileInputStream(csv1);
+
+                String val[] = new String[]{name1,age1,gender1,email1,phone1};
+                //String row1[] = new String[]{"Name","Age", "Gender", "Email", "Phone no"};
+                Sheet sheet = null;
+                Row row1 = null;
+                Cell cell = null;
+
+                Workbook book1 = new HSSFWorkbook(fileInputStream);
+                sheet = book1.getSheet("sheet1");
+                int lastrow = sheet.getLastRowNum();
+                row1 = sheet.createRow(lastrow+1);
+                for(int i=0;i<5;i++){
+                    cell = row1.createCell(i);
+                    cell.setCellValue(val[i]);
+
+                }
+
+                int cellNum = row1.getLastCellNum();
+                int Index = book1.addPicture(ImageByte,Workbook.PICTURE_TYPE_JPEG);
+                CreationHelper creationHelper = book1.getCreationHelper();
+
+                ClientAnchor clientAnchor = creationHelper.createClientAnchor();
+                clientAnchor.setCol1(cellNum);
+                clientAnchor.setRow1(lastrow+1);
+                clientAnchor.setCol2(cellNum+1);
+                clientAnchor.setRow2(lastrow+2);
+
+                Drawing drawing = sheet.createDrawingPatriarch();
+                drawing.createPicture(clientAnchor, Index);
+
+                fileInputStream.close();
+
+
+                FileOutputStream fileOutputStream = null;
+
+                try {
+                    fileOutputStream = new FileOutputStream(csv1);
+                    book1.write(fileOutputStream);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if(fileOutputStream != null){
+                    try {
+                        fileOutputStream.flush();
+                        fileOutputStream.close();
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
             } catch (IOException e) {
                 Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public void selectImage(View view) {
+        try {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent,PICK_IMAGE);
+        }catch (Exception e){
+            Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        try {
+            imageFilePath = data.getData();
+            ImageStore = MediaStore.Images.Media.getBitmap(getContentResolver(),imageFilePath);
+            //ImageStore = BitmapFactory.decodeFile(imageFilePath.toString());
+            image.setImageBitmap(ImageStore);
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+        }
+
     }
 }
